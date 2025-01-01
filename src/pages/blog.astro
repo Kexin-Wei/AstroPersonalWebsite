@@ -1,8 +1,23 @@
-<body>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/blog">Blogs</a>
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogPost from "../components/BlogPost.astro";
+const allPosts = Object.values(
+    import.meta.glob("./posts/*.md", { eager: true }),
+);
+const pageTitle = "A Set of Thoughts";
+---
 
-    <h1>A Set of Thoughts</h1>
+<BaseLayout pageTitle={pageTitle}>
     <h3>Holding my floating thoughts and supplementarily a floating me</h3>
-</body>
+    <ul>
+        {
+            allPosts.map((post: any) => (
+                <BlogPost
+                    url={post.url}
+                    date={post.frontmatter.pubDate.toString().slice(0, 10)}
+                    title={post.frontmatter.title}
+                />
+            ))
+        }
+    </ul>
+</BaseLayout>

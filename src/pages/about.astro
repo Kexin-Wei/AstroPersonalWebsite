@@ -1,8 +1,57 @@
-<body>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/blog">Blogs</a>
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const pageTitle = "About Me";
 
-    <h1>About Me</h1>
-    <h2>I love Robotics and AI, as you can see, so is software development.</h2>
-</body>
+const identity = {
+    firstName: "Kristin",
+    country: "Singapore",
+    occupation: "R&D Engineer",
+    hobbies: ["hiking", "photographing", "trail running"],
+    enjoys: ["musics", "movies"],
+};
+
+const skills = [
+    "Python",
+    "C++",
+    "ROS",
+    "Docker",
+    "Pytorch",
+    "Matlab",
+    "VTK",
+    "Qt",
+    "OpenCV",
+];
+
+const skillColor = "#1a5276";
+const textCase = "uppercase";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+    <style is:global define:vars={{ skillColor, textCase }}>
+        .skill {
+            color: var(--skillColor);
+            text-transform: var(--textCase);
+        }
+    </style>
+
+    <p>Here is something about me</p>
+
+    <ul>
+        <li>My name is {identity.firstName}.</li>
+        <li>
+            I live in {identity.country} and work as a {identity.occupation}.
+        </li>
+        <li>And I love Robotics and AI, and so is software development.</li>
+        {
+            identity.hobbies.length >= 2 && (
+                <li>
+                    My hobbies are {identity.hobbies[0]},{identity.hobbies[1]}{" "}
+                    and {identity.hobbies[2]}.
+                </li>
+            )
+        }
+    </ul>
+
+    <p>I own skills:</p>
+    <ul>{skills.map((skill) => <li class="skill">{skill}</li>)}</ul>
+</BaseLayout>
